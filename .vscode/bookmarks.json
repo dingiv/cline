@@ -1,0 +1,34 @@
+{
+	"files": [
+		{
+			"path": "src/core/task/index.ts",
+			"bookmarks": [
+				{
+					"line": 153,
+					"column": 19,
+					"label": ""
+				},
+				{
+					"line": 1032,
+					"column": 92,
+					"label": ""
+				},
+				{
+					"line": 1427,
+					"column": 77,
+					"label": ""
+				}
+			]
+		},
+		{
+			"path": "src/core/controller/index.ts",
+			"bookmarks": [
+				{
+					"line": 68,
+					"column": 25,
+					"label": ""
+				}
+			]
+		}
+	]
+}

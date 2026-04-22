@@ -16,6 +16,8 @@
 | 工具执行    | [tool-execution.md](tool-execution.md)       | 26 个工具、自动审批、Hook 机制  |
 | 通信机制    | [communication.md](communication.md)         | ProtoBus/gRPC、前后端消息传递   |
 | API 提供商  | [api-providers.md](api-providers.md)         | 47 个提供商、统一接口、流式响应 |
+| Checkpoint  | [checkpoint.md](checkpoint.md)               | Shadow Git 快照、回滚机制、并发控制 |
+| 文件上下文  | [file-context.md](file-context.md)           | 文件收集、环境注入、工具驱动发现 |
 
 ## 核心数据流（全局视角）
 

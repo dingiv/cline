@@ -48,7 +48,7 @@
 │          ├── parseAssistantMessageV2()  解析响应           │
 │          └── presentAssistantMessage()  分发处理           │
 │                ├── text → 显示到 UI                       │
-│                └── tool_use → ToolExecutor                │
+│                └── tool_use → ToolExecutor               │
 └─────────────────────────────────────────────────────────┘
                        │
                        ▼

@@ -1,12 +1,22 @@
 # Agent 循环
 
-## 核心文件
+> - [task/index.ts](/src/core/task/index.ts) — Task 类，约 3300 行，整个代理循环引擎
+> - [ToolExecutor.ts](/src/core/task/ToolExecutor.ts) — 工具执行入口
+> - [assistant-message/index.ts](/src/core/assistant-message/index.ts) — 助手消息解析
 
-- [task/index.ts](../src/core/task/index.ts) — Task 类，约 3300 行，整个代理循环引擎
-- [ToolExecutor.ts](../src/core/task/ToolExecutor.ts) — 工具执行入口
-- [assistant-message/index.ts](../src/core/assistant-message/index.ts) — 助手消息解析
+Agent 循环的基本过程可以分为如下 4 步
 
-## Task 类初始化
++ 构建 prompt
++ 发起请求
++ 流式监听，实时解析
+  + 如果是 tools_call，则执行调用，返回调用的结果
+  + 如果是结束标识，则退出循环
+  + 如果是生成的内容，则刷新 UI
+  + 如果是空消息，说明是异常情况，记录错误，并退出
++ 保存上下文
+
+## Task 类与双层循环结构
+Agent 循环的能力通过 Task 的方法进行实现。
 
 ```typescript
 class Task {
@@ -27,11 +37,9 @@ class Task {
 }
 ```
 
-## 双层循环结构
-
 ### 外层循环：initiateTaskLoop()
 
-**位置**：[task/index.ts](../src/core/task/index.ts) ~line 1453
+**位置**：[task/index.ts](/src/core/task/index.ts) ~line 1453
 
 ```typescript
 async initiateTaskLoop(userContent: UserContent) {
@@ -52,9 +60,11 @@ async initiateTaskLoop(userContent: UserContent) {
 
 ### 内层循环：recursivelyMakeClineRequests()
 
-**位置**：[task/index.ts](../src/core/task/index.ts) ~line 2351
+**位置**：[task/index.ts](/src/core/task/index.ts) ~line 2351
 
 这是递归函数，每一轮代表一次完整的 API 调用 + 工具执行：
+
+![](./loop.dio.svg)
 
 ```
 recursivelyMakeClineRequests(userContent)

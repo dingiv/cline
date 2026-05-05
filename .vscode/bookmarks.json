@@ -6,7 +6,7 @@
 				{
 					"line": 153,
 					"column": 19,
-					"label": ""
+					"label": "Task 定义"
 				},
 				{
 					"line": 1032,
@@ -16,7 +16,27 @@
 				{
 					"line": 1427,
 					"column": 77,
-					"label": ""
+					"label": "初始化一个新的 Task"
+				},
+				{
+					"line": 1995,
+					"column": 116,
+					"label": "创建 api 请求句柄"
+				},
+				{
+					"line": 2328,
+					"column": 112,
+					"label": "开启单轮对话迭代"
+				},
+				{
+					"line": 2832,
+					"column": 18,
+					"label": "循环处理每一个 chunk"
+				},
+				{
+					"line": 3196,
+					"column": 100,
+					"label": "递归迭代单轮对话"
 				}
 			]
 		},
@@ -26,6 +46,16 @@
 				{
 					"line": 68,
 					"column": 25,
+					"label": ""
+				}
+			]
+		},
+		{
+			"path": "src/core/api/providers/zai.ts",
+			"bookmarks": [
+				{
+					"line": 77,
+					"column": 111,
 					"label": ""
 				}
 			]

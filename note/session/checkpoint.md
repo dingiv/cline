@@ -19,26 +19,26 @@ Shadow Git 配置:
 
 ### 关键文件
 
-| 文件 | 职责 |
-|------|------|
-| `src/integrations/checkpoints/CheckpointTracker.ts` | 核心 Git 操作：init、commit、reset |
-| `src/integrations/checkpoints/CheckpointGitOperations.ts` | 底层 git 命令封装 |
-| `src/integrations/checkpoints/CheckpointExclusions.ts` | 文件排除规则 |
-| `src/integrations/checkpoints/CheckpointLockUtils.ts` | 跨实例并发锁 |
-| `src/integrations/checkpoints/CheckpointUtils.ts` | 路径哈希、工作区校验 |
-| `src/integrations/checkpoints/index.ts` | `TaskCheckpointManager`，上层管理器 |
-| `src/integrations/checkpoints/factory.ts` | 工厂函数 `buildCheckpointManager()` |
+| 文件                                                      | 职责                                |
+| --------------------------------------------------------- | ----------------------------------- |
+| `src/integrations/checkpoints/CheckpointTracker.ts`       | 核心 Git 操作：init、commit、reset  |
+| `src/integrations/checkpoints/CheckpointGitOperations.ts` | 底层 git 命令封装                   |
+| `src/integrations/checkpoints/CheckpointExclusions.ts`    | 文件排除规则                        |
+| `src/integrations/checkpoints/CheckpointLockUtils.ts`     | 跨实例并发锁                        |
+| `src/integrations/checkpoints/CheckpointUtils.ts`         | 路径哈希、工作区校验                |
+| `src/integrations/checkpoints/index.ts`                   | `TaskCheckpointManager`，上层管理器 |
+| `src/integrations/checkpoints/factory.ts`                 | 工厂函数 `buildCheckpointManager()` |
 
 ## Checkpoint 创建
 
 ### 创建时机（`src/core/task/index.ts`）
 
-| 时机 | 代码位置 | 说明 |
-|------|---------|------|
-| 首次 API 请求 | ~L2420-2483 | 任务开始时拍初始快照，发出 `checkpoint_created` 消息 |
-| 每轮工具执行完毕 | ~L3180 | `checkpointManager.saveCheckpoint()` |
-| 用户发送反馈/消息 | ~L1279 | 处理用户输入前保存 |
-| 任务完成 | `index.ts:189-224` | hash 绑定到 `completion_result` 而非新建消息 |
+| 时机              | 代码位置           | 说明                                                 |
+| ----------------- | ------------------ | ---------------------------------------------------- |
+| 首次 API 请求     | ~L2420-2483        | 任务开始时拍初始快照，发出 `checkpoint_created` 消息 |
+| 每轮工具执行完毕  | ~L3180             | `checkpointManager.saveCheckpoint()`                 |
+| 用户发送反馈/消息 | ~L1279             | 处理用户输入前保存                                   |
+| 任务完成          | `index.ts:189-224` | hash 绑定到 `completion_result` 而非新建消息         |
 
 ### Commit 流程
 
@@ -57,10 +57,10 @@ CheckpointTracker.commit():
 
 ### 三种回滚类型
 
-| 类型 | 工作区文件 | 对话历史 |
-|------|-----------|---------|
-| `"task"` | 不变 | 截断到 checkpoint 位置 |
-| `"workspace"` | `git reset --hard` 回滚 | 不变 |
+| 类型                 | 工作区文件              | 对话历史               |
+| -------------------- | ----------------------- | ---------------------- |
+| `"task"`             | 不变                    | 截断到 checkpoint 位置 |
+| `"workspace"`        | `git reset --hard` 回滚 | 不变                   |
 | `"taskAndWorkspace"` | `git reset --hard` 回滚 | 截断到 checkpoint 位置 |
 
 ### Task 回滚细节（`index.ts:659-703`）
@@ -80,14 +80,14 @@ CheckpointTracker.commit():
 
 ## 文件排除规则（`CheckpointExclusions.ts`）
 
-| 类别 | 示例 |
-|------|------|
-| Git 目录 | `.git/`, `.git_disabled/` |
-| 构建产物 | `node_modules/`, `dist/`, `build/`, `.next/` |
-| 媒体文件 | 图片、视频、音频格式 |
-| 缓存/临时 | `*.lock`, `*.tmp`, `*.log`, `*.cache` |
-| 敏感配置 | `*.env*`, `*.local` |
-| 大文件 | 归档 (`*.zip`, `*.tar`), 二进制 (`*.exe`, `*.dll`), 数据库 (`*.sqlite`) |
+| 类别      | 示例                                                                    |
+| --------- | ----------------------------------------------------------------------- |
+| Git 目录  | `.git/`, `.git_disabled/`                                               |
+| 构建产物  | `node_modules/`, `dist/`, `build/`, `.next/`                            |
+| 媒体文件  | 图片、视频、音频格式                                                    |
+| 缓存/临时 | `*.lock`, `*.tmp`, `*.log`, `*.cache`                                   |
+| 敏感配置  | `*.env*`, `*.local`                                                     |
+| 大文件    | 归档 (`*.zip`, `*.tar`), 二进制 (`*.exe`, `*.dll`), 数据库 (`*.sqlite`) |
 
 ## Proto 定义
 

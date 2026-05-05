@@ -1,0 +1,83 @@
+{
+	// POST https://api.anthropic.com/v1/messages
+	"model": "claude-sonnet-4-20250514",
+	"max_tokens": 8192,
+	"temperature": 0,
+	"stream": true,
+	"system": [
+		{
+			"type": "text",
+			"text": "You are Cline, a highly skilled software engineer...\n\n# OS\nlinux\n\n# CWD\n/home/user/project\n\n# RULES\n...\n\n# CAPABILITIES\n...\n\n# TOOL USE\n...",
+			"cache_control": {
+				"type": "ephemeral"
+			}
+		}
+	],
+	"messages": [
+		{
+			"role": "user",
+			"content": [
+				{
+					"type": "text",
+					"text": "帮我写一个 hello world"
+				}
+			]
+		},
+		{
+			"role": "assistant",
+			"content": [
+				{
+					"type": "thinking",
+					"thinking": "用户想要...",
+					"signature": "..."
+				},
+				{
+					"type": "text",
+					"text": "我来帮你创建一个 hello world 文件。"
+				},
+				{
+					"type": "tool_use",
+					"id": "toolu_01ABC",
+					"name": "write_to_file",
+					"input": "{\"path\":\"hello.py\",\"content\":\"print('hello world')\"}"
+				}
+			]
+		},
+		{
+			"role": "user",
+			"content": [
+				{
+					"type": "tool_result",
+					"tool_use_id": "toolu_01ABC",
+					"content": "File created successfully at hello.py"
+				}
+			]
+		}
+	],
+	"tools": [
+		{
+			"name": "read_file",
+			"description": "Read a file's contents...",
+			"input_schema": {
+				"type": "object",
+				"properties": {
+					"path": {
+						"type": "string",
+						"description": "The file path to read"
+					}
+				},
+				"required": [
+					"path"
+				]
+			}
+		},
+		{
+			"name": "write_to_file",
+			"description": "Write content to a file...",
+			"input_schema": {
+				// ...
+			}
+		}
+		// ... 其余 24 个工具
+	]
+}
